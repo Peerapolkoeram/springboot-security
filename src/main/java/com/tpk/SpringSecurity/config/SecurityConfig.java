@@ -1,7 +1,7 @@
 package com.tpk.SpringSecurity.config;
 
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configurable
+@Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
@@ -21,8 +21,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.authorizeHttpRequests( http -> {
             http.requestMatchers("/api/home").permitAll()
-                    .requestMatchers("/api/user/***").hasRole("ADMIN")
-                    .requestMatchers("/api/admin/***").hasRole("USER")
+                    .requestMatchers("/api/user/***").hasRole("USER")
+                    .requestMatchers("/api/admin/***").hasRole("ADMIN")
                     .anyRequest().authenticated();
         })
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
